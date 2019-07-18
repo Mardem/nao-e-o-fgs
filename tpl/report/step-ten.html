@@ -1,0 +1,169 @@
+<step-ten>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-nine"></button>
+        <div class="center">
+            <h1 class="title">KM Final</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/wall-calendar.svg" alt="Imagem de data" width="70" class="center mb-20">
+            <h2 class="text-center mb-20">
+                KM Final
+            </h2>
+            <div class="center" id="step-ten">
+                <p class="text-center">
+                    Preencha o campo com o KM Final do Ônibus
+                </p>
+                <ul class="list">
+                    <li class="divider">KM Final</li>
+                    <li class="mb-20 mt-10">
+                        <input type="number" min="0" id="km-final-onibus" v-model="kmFinalOnibus"
+                               placeholder="Digite o KM Final">
+                    </li>
+                    <li class="divider">Empresas de tranportes</li>
+                    <li class="mb-20 mt-10">
+                        <select id="transport_id" v-model="transport_id">
+                            <option value="nothing">Selecione uma empresa</option>
+                            <option v-for="transport in transports" :value="transport.id">{{ transport.name }}</option>
+                        </select>
+                    </li>
+                </ul>
+
+                <div class="mt-10 mb-10">
+                    <p class="text-center">
+                        <span class="font-20px" v-if="finalKM >= 0">
+                            <b class="green">KM Percorrido:</b> {{ finalKM }} {{ finalKM > 1 ? 'KMs' : 'KM' }}
+                        </span>
+                    </p>
+                    <p class="text-center">
+                        <span class="font-20px" v-if="excedente >= 0">
+                            <b class="red">KM Excedente:</b> {{ excedente }} {{ excedente > 1 ? 'KMs' : 'KM' }}
+                        </span>
+                    </p>
+                </div>
+
+                <button id="set-step-nine" class="center btn primary fit-parent" @click="saveStep"><i
+                        class="ti-angle-right"></i> Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</step-ten>
+
+<script>
+    new Vue({
+        el: '#step-ten',
+        data: {
+            kmInicialOnibus: localStorage.kmInicialOnibus,
+            kmFinalOnibus: localStorage.kmFinalOnibus !== undefined ? localStorage.kmFinalOnibus : 0,
+            transports: [],
+            transport_id: "nothing"
+        },
+        computed: {
+            finalKM() {
+                return this.kmFinalOnibus - this.kmInicialOnibus;
+            },
+            excedente() {
+                return this.finalKM - 100;
+            }
+        },
+        watch: {
+            kmFinalOnibus() {
+                localStorage.kmFinalOnibus = this.kmFinalOnibus;
+            }
+        },
+        methods: {
+            saveStep() {
+                if (this.transport_id === "nothing") {
+                    errorAlert('Selecione a empresa');
+                } else {
+                    localStorage.transport_id = this.transport_id;
+                    app.changePage('step-eleven');
+                }
+            },
+            getTransports() {
+                let newsTransports = phonon.dialog('#more-news-transports');
+                newsTransports.open();
+                axios.post(URI_API + '/auth/login', {
+                    email: localStorage.email,
+                    password: localStorage.password
+                }).then((response) => {
+
+                    axios.get(URI_API + '/transports/0', {
+                        headers: {
+                            Authorization: "Bearer " + response.data.token
+                        }
+                    })
+                        .then((response) => {
+                            this.transports = response.data;
+                            localStorage.storageTransports = JSON.stringify(response.data);
+
+                            if (localStorage.transport_id) {
+                                this.transport_id = localStorage.transport_id;
+                            }
+
+                            newsTransports.close();
+                        }).catch((err) => {
+                        errorAlert(err.toString());
+                    });
+
+                }).catch((err) => {
+                    errorAlert(err.toString());
+                });
+            },
+            loadModeTransports() {
+                if (localStorage.storageTransports) {
+                    this.syncIfUnsyc();
+                } else {
+                    this.getTransports();
+                }
+            },
+            syncIfUnsyc() {
+                let loading = phonon.indicator('Aguarde, carregando as empresas...', false);
+                loading.open();
+
+                axios.post(URI_API + '/auth/login', {
+                    email: localStorage.email,
+                    password: localStorage.password
+                }).then((response) => {
+
+                    axios.get(URI_API + '/transports/1', {
+                        headers: {
+                            Authorization: "Bearer " + response.data.token
+                        }
+                    })
+                        .then((response) => {
+
+                            let savedTransports = JSON.parse(localStorage.storageTransports);
+
+                            if (savedTransports.length !== response.data) {
+                                this.getTransports();
+                            }
+                            this.transports = savedTransports;
+                            if (localStorage.transport_id) {
+                                this.transport_id = localStorage.transport_id;
+                            }
+
+                            loading.close();
+                        })
+                        .catch((err) => {
+                            errorAlert(err.toString());
+                        });
+
+                })
+                    .catch((err) => {
+                        errorAlert(err.toString());
+                    });
+            }
+        },
+        mounted() {
+            this.loadModeTransports();
+        }
+    });
+</script>

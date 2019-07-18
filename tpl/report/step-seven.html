@@ -1,0 +1,43 @@
+<step-seven>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-six"></button>
+        <div class="center">
+            <h1 class="title">Atividades</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/transaction.svg" alt="Imagem de transações" width="100"
+                 class="center mb-10">
+            <h2 class="text-center mb-20">
+                Atividades
+            </h2>
+            <div class="center" id="step-seven">
+                <p class="text-center">
+                    Selecione a atividade deste relatório
+                </p>
+                <ul class="list">
+                    <li class="divider">Atividades do contrato</li>
+                    <li class="mb-20 mt-10">
+
+                        <select v-model="activity_id" id="activity_id">
+                            <option value="nothing">Selecione uma atividade</option>
+                            <option v-for="activity in activities" :value="activity.id">{{ activity.name }}</option>
+                        </select>
+                    </li>
+
+                    <li class="divider">Valor Gasto Atividade</li>
+                    <li class="mb-20 mt-10">
+                        <input type="number" v-model="valor_gasto">
+                    </li>
+                </ul>
+                <button id="set-step-seven" class="center btn primary fit-parent" @click="saveActivity"><i class="ti-angle-right"></i> Avançar </button>
+            </div>
+
+        </div>
+    </div>
+</step-seven>

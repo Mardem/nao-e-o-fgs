@@ -1,0 +1,17 @@
+{
+  "name": "aplicativo-fgs",
+  "version": "1.0.0",
+  "description": "Aplicativo PWA para o sistema da empresa FGS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Basic Sistemas",
+  "license": "OEM,",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "izitoast": "^1.4.0",
+    "phonon": "^1.4.9",
+    "vue": "^2.6.7"
+  }
+}

@@ -1,0 +1,114 @@
+<step-three>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" id="back-step-two"></button>
+        <div class="center">
+            <h1 class="title">Trabalhadores</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/networking.svg" alt="Imagem de trabalhadores" width="100"
+                 class="center mb-10">
+            <h2 class="text-center mb-20">
+                Quantidade de trabalhadores
+            </h2>
+            <div class="center">
+                <p class="text-center">
+                    Preencha <i>
+                    <b>Quantidade de Auxiliares</b>, <b>Quantidade de Fiscais</b>, <b>Quantidade de Apontadores</b>,
+                    <b>Quantidade de Coordenadores</b>, <b>Quantidade de Faltas</b>, <b>Quantidade de Atestados</b> e
+                    <b>Quantidade de Folga</b>
+                </i>
+                </p>
+
+                <ul class="list">
+                    <li class="divider">Quantidade de Auxiliares</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntAux" placeholder="Quantidade de Auxiliares">
+                    </li>
+
+                    <li class="divider">Quantidade de Fiscais</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntFisc" placeholder="Quantidade de Fiscais">
+                    </li>
+
+                    <li class="divider">Quantidade de Apontadores</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntApon" placeholder="Quantidade de Apontadores">
+                    </li>
+
+                    <li class="divider">Quantidade de Coordenadores</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntCoor" placeholder="Quantidade de Coordenadores">
+                    </li>
+
+                    <li class="divider">Quantidade de Faltas</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntFalt" placeholder="Quantidade de Faltas">
+                    </li>
+
+                    <li class="divider">Quantidade de Atestados</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntAtes" placeholder="Quantidade de Atestados">
+                    </li>
+
+                    <li class="divider">Quantidade de Folga</li>
+                    <li class="mb-5">
+                        <input type="number" min="0" id="qntFolg" placeholder="Quantidade de Folga">
+                    </li>
+                </ul>
+
+                <button id="set-step-three" class="center btn primary fit-parent"><i class="ti-angle-right"></i> Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</step-three>
+
+<script>
+    let qntAux = document.querySelector('#qntAux');
+    let qntFisc = document.querySelector('#qntFisc');
+    let qntApon = document.querySelector('#qntApon');
+    let qntCoor = document.querySelector('#qntCoor');
+    let qntFalt = document.querySelector('#qntFalt');
+    let qntAtes = document.querySelector('#qntAtes');
+    let qntFolg = document.querySelector('#qntFolg');
+
+    document.querySelector('#set-step-three').on('click', function () {
+        if (
+            qntAux.value ===  '' || qntAux.value ===  null ||
+            qntFisc.value === '' || qntFisc.value === null ||
+            qntApon.value === '' || qntApon.value === null ||
+            qntCoor.value === '' || qntCoor.value === null ||
+            qntFalt.value === '' || qntFalt.value === null ||
+            qntAtes.value === '' || qntAtes.value === null ||
+            qntFolg.value === '' || qntFolg.value === null  ) {
+            errorAlert('Preencha todos os campos.');
+        } else {
+            localStorage.qntAux = qntAux.value;
+            localStorage.qntFisc = qntFisc.value;
+            localStorage.qntApon = qntApon.value;
+            localStorage.qntCoor = qntCoor.value;
+            localStorage.qntFalt = qntFalt.value;
+            localStorage.qntAtes = qntAtes.value;
+            localStorage.qntFolg = qntFolg.value;
+
+            successAlert('Dados armazenados!');
+            app.changePage('step-four');
+        }
+    });
+
+    // Verifica se irá usar transporte e redireciona pra rota correta
+    document.querySelector('#back-step-two').on('click', function () {
+        if (localStorage.useTransport == "false") {
+            app.changePage('step-one');
+        } else {
+            app.changePage('step-two');
+        }
+    });
+</script>

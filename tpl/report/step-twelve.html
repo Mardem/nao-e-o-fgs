@@ -1,0 +1,59 @@
+<step-twelve>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-eleven"></button>
+        <div class="center">
+            <h1 class="title">Hectares</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/tractor.svg" alt="Imagem de trator" width="70"
+                 class="center mb-20">
+            <h2 class="text-center mb-20">
+                Hectare Manual / Mecânico
+            </h2>
+            <div class="center" id="step-ten">
+                <p class="text-center">
+                    Preencha o campo com os valores de hectares
+                </p>
+                <ul class="list">
+                    <li class="divider">Hectare Manual</li>
+                    <li class="mb-20 mt-10">
+                        <input type="number" min="0" id="hec-manual" placeholder="Digite Hectare Manual">
+                    </li>
+                    <li class="divider">Hectare Mecânico</li>
+                    <li class="mb-20 mt-10">
+                        <input type="number" min="0" id="hec-mecanico" placeholder="Digite Hectare Mecânico">
+                    </li>
+                </ul>
+
+                <button id="set-step-twelve" class="center btn primary fit-parent"><i class="ti-angle-right"></i>
+                    Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</step-twelve>
+
+<script>
+    notif.show();
+    let hec_manual = document.querySelector('#hec-manual');
+    let hec_mecanico = document.querySelector('#hec-mecanico');
+
+    document.querySelector('#set-step-twelve').on('click', function () {
+
+        if (hec_manual.value === '' || hec_mecanico.value === '') {
+            errorAlert("Campos obrigatórios");
+        } else {
+            localStorage.hec_manual = hec_manual.value;
+            localStorage.hec_mecanico = hec_mecanico.value;
+            app.changePage('step-thirteen');
+        }
+
+    });
+</script>

@@ -1,0 +1,67 @@
+<step-two>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-one"></button>
+        <div class="center">
+            <h1 class="title">Saída e KM Inicial</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-50">
+            <img src="../../assets/img/icons/wall-calendar.svg" alt="Imagem de data" width="70" class="center mb-20">
+            <h3 class="text-center mb-20">
+                Hora de Saída / KM Inicial
+            </h3>
+            <div class="center">
+                <p class="text-center">
+                    Preencha a hora de <i>Saída do Trevo</i> e o <i>KM Inicial do Ônibus</i>
+                </p>
+
+                <ul class="list">
+                    <li class="divider">Hora de saída do trevo</li>
+                    <li class="mb-5">
+                        <input type="time" id="saidaTrevo">
+                    </li>
+                    <li class="divider">
+                        KM Inicial do Ônibus
+                    </li>
+                    <li>
+                        <input type="number" min="0" id="kmInicialOnibus" placeholder="KM Inicial">
+                    </li>
+                </ul>
+                <button id="set-step-two" class="center btn primary fit-parent"><i class="ti-angle-right"></i> Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</step-two>
+
+<script>
+    let saida = document.querySelector('#saidaTrevo');
+    let kmOnibus = document.querySelector('#kmInicialOnibus');
+
+    document.querySelector('#set-step-two').on('click', function () {
+
+        if (saida.value === "" || saida.value === null) {
+            notif.hide();
+            errorAlert('Você deixou o campo de saída em branco!');
+        } else if(kmOnibus === "" || kmOnibus === null) {
+            notif.hide();
+            errorAlert('Você deixou o campo de KM Inicial em branco!');
+        } else {
+
+            // Salva os dados no LocalStorage
+            localStorage.saidaTrevo = saida.value;
+            localStorage.kmInicialOnibus = kmOnibus.value;
+
+            successAlert('Dados armazenados!');
+            app.changePage('step-three');
+        }
+    });
+
+</script>

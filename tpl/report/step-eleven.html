@@ -1,0 +1,71 @@
+<step-eleven>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" id="back-step-teen"></button>
+        <div class="center">
+            <h1 class="title">Origem</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/map-location.svg" alt="Imagem de localização" width="70"
+                 class="center mb-20">
+            <h2 class="text-center mb-20">
+                Local de Origem
+            </h2>
+            <div class="center" id="step-ten">
+                <p class="text-center">
+                    Preencha o campo com o local de origem
+                </p>
+                <ul class="list">
+                    <li class="divider">Local de Origem</li>
+                    <li class="mb-20 mt-10">
+                        <input type="text" id="origem" placeholder="Digite o local de origem">
+                    </li>
+                    <li class="divider">Local Trabalhado</li>
+                    <li class="mb-20 mt-10">
+                        <input type="text" id="contrato" placeholder="Digite o contrato">
+                    </li>
+                    <li class="divider">Destino</li>
+                    <li class="mb-20 mt-10">
+                        <input type="text" id="destino" placeholder="Digite o destino">
+                    </li>
+                </ul>
+
+                <button id="set-step-eleven" class="center btn primary fit-parent"><i class="ti-angle-right"></i>
+                    Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</step-eleven>
+
+<script>
+    let origem = document.querySelector('#origem');
+    let destino = document.querySelector('#destino');
+    let contrato = document.querySelector('#contrato');
+
+    document.querySelector('#set-step-eleven').on('click', function () {
+        if (origem.value === '' || destino.value === '' || contrato.value === '') {
+            errorAlert("Campos obrigatórios");
+        } else {
+            localStorage.origem = origem.value;
+            localStorage.destino = destino.value;
+            localStorage.localTrabalhado = contrato.value;
+            app.changePage('step-twelve');
+        }
+    });
+
+    // Verifica se irá usar transporte e redireciona pra rota correta
+    document.querySelector('#back-step-teen').on('click', function () {
+        if (localStorage.useTransport == "false") {
+            app.changePage('step-nine');
+        } else {
+            app.changePage('step-ten');
+        }
+    });
+</script>

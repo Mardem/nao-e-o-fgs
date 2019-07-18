@@ -1,0 +1,42 @@
+<step-thirteen>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-eleven"></button>
+        <div class="center">
+            <h1 class="title">Valor produção integrante</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/review.svg" alt="Imagem de avaliação" width="100"
+                 class="center mb-20">
+            <h2 class="text-center mb-20">
+                Produção de integrantes
+            </h2>
+            <div class="center" id="step-thirteen">
+
+                <form id="integrants-form" v-on:submit.prevent="serialize" name="integrants-form">
+                    <div id="integrants-team" class="mt-15 mb-15" v-for="integrant in integrants">
+                        <h5 class="line-integrant">
+                            {{ integrant.name }}
+                        </h5>
+                        <input type="number" min="0" step="0.01" :name="integrant.name"
+                               :placeholder="'Avaliação para ' + integrant.name" :data-id="integrant.id" required>
+                    </div>
+                    <button id="set-step-thirteen" class="center btn primary fit-parent"><i
+                            class="ti-angle-right"></i> Avançar</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</step-thirteen>
+
+<script>
+
+
+</script>

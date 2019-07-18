@@ -1,0 +1,108 @@
+<step-six>
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-arrow-back" data-navigation="step-five"></button>
+        <div class="center">
+            <h1 class="title">Consumo</h1>
+        </div>
+        <button class="btn pull-right" data-popover-id="report-settings">
+            <i class="ti-settings"></i>
+        </button>
+    </header>
+
+    <div class="content">
+        <div class="padded-full mt-20">
+            <img src="../../assets/img/icons/transaction.svg" alt="Imagem de transações" width="100"
+                 class="center mb-10">
+            <h2 class="text-center mb-20">
+                Quantidades de consumo
+            </h2>
+            <div class="center" id="step-six">
+                <p class="text-center">
+                    Preencha todos os campos com as quantidades de consumo.
+                </p>
+
+                <ul class="list">
+                    <li class="divider">Quantidade de Banheiro</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-banheiro" placeholder="Quantidade de banheiro utilizado" min="0"
+                               v-model="consumo.banheiro">
+                    </li>
+
+                    <li class="divider">Quantidade de Pão</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-pao" placeholder="Quantidade de pão" min="0"
+                               v-model="consumo.pao">
+                    </li>
+
+                    <li class="divider">Quantidade de Banana</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-banana" placeholder="Quantidade de banana" min="0"
+                               v-model="consumo.banana">
+                    </li>
+
+                    <li class="divider">Quantidade de Café</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-cafe" placeholder="Quantidade de café" min="0"
+                               v-model="consumo.cafe">
+                    </li>
+
+                    <li class="divider">Quantidade de Almoço</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-almoco" placeholder="Quantidade de almoço" min="0"
+                               v-model="consumo.almoco">
+                    </li>
+
+                    <li class="divider">Quantidade de Jantar</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-jantar" placeholder="Quantidade de jantar" min="0"
+                               v-model="consumo.jantar">
+                    </li>
+
+                    <li class="divider">Quantidade Diária/Alojamento</li>
+                    <li class="mb-15">
+                        <input type="number" id="qntd-diaria" placeholder="Quantidade Diária/Alojamento" min="0"
+                               v-model="consumo.diaria">
+                    </li>
+
+                </ul>
+                <button id="set-step-six" class="center btn primary fit-parent"><i class="ti-angle-right"></i> Avançar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</step-six>
+
+<script>
+    let banheiro = document.querySelector('#qntd-banheiro');
+    let pao = document.querySelector('#qntd-pao');
+    let banana = document.querySelector('#qntd-banana');
+    let cafe = document.querySelector('#qntd-cafe');
+    let almoco = document.querySelector('#qntd-almoco');
+    let jantar = document.querySelector('#qntd-jantar');
+    let diaria = document.querySelector('#qntd-diaria');
+
+    document.querySelector('#set-step-six').on('click', function () {
+        if (
+            banheiro.value === '' || banheiro.value === null ||
+            pao.value === '' || pao.value === null ||
+            banana.value === '' || banana.value === null ||
+            cafe.value === '' || cafe.value === null ||
+            almoco.value === '' || almoco.value === null ||
+            jantar.value === '' || jantar.value === null ||
+            diaria.value === '' || diaria.value === null
+        ) {
+            errorAlert('Preencha todos os campos.');
+        } else {
+            localStorage.banheiro = banheiro.value;
+            localStorage.pao = pao.value;
+            localStorage.banana = banana.value;
+            localStorage.cafe = cafe.value;
+            localStorage.almoco = almoco.value;
+            localStorage.jantar = jantar.value;
+            localStorage.diaria = diaria.value;
+            successAlert('Dados armazenados!');
+            app.changePage('step-seven');
+        }
+    });
+</script>

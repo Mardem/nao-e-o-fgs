@@ -1,0 +1,32 @@
+<dashboard class="app-page">
+    <header class="header-bar">
+        <button class="btn pull-left icon icon-menu" data-side-panel-id="side-home"></button>
+        <button class="btn pull-right ti-arrow-circle-left" id="logout"></button>
+        <div class="center">
+            <h1 class="title">Entrada do aplicativo</h1>
+        </div>
+    </header>
+
+    <div class="content text-center">
+        <div class="p-10 mt-50 content-center">
+
+            <img src="assets/img/logo.png" class="logo" alt="Logo FGS" max-width="200">
+
+            <h2 id="welcome-message">Bem vindo</h2>
+
+            <button class="btn fit-parent primary mt-50" id="newReport">Novo relatório</button>
+            <a class="btn fit-parent mt-10 p-15" href="https://sistema-fgs.herokuapp.com/admin/reports/camp" target="_blank">Relatórios</a>
+        </div>
+    </div>
+</dashboard>
+
+<script>
+    document.querySelector('#logout').on('click', function () {
+        app.changePage('login');
+    });
+    document.querySelector('#newReport').on('click', function () {
+        app.changePage('step-one');
+    });
+    let welcome = document.querySelector('#welcome-message');
+    welcome.innerHTML = 'Bem vindo, ' + localStorage.user_name ;
+</script>

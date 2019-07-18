@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=yes"/>
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+    <title>Apontamento FGS</title>
+
+    <link rel="stylesheet" href="assets/node_modules/phonon/dist/css/phonon.min.css">
+    <link rel="stylesheet" href="assets/node_modules/izitoast/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="assets/less/styles.min.css">
+    <link rel=stylesheet href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.min.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<!-- Popover settings report -->
+<div class="popover" id="report-settings">
+    <ul class="list">
+        <li id="disable-notification"><a class="text-center">Desativar notificação</a></li>
+        <li id="update-page"><a class="text-center">Atualizar dados</a></li>
+    </ul>
+</div>
+
+<!-- Side Panel for Dashboard -->
+<div class="side-panel side-panel-left" data-expose-aside="none" data-disable="right" data-page="dashboard"
+     id="side-home">
+    <header class="header-bar">
+        <div class="pull-left center">
+            <h1 class="title"><i class="ti-pencil-alt"></i> Apontamento FGS</h1>
+        </div>
+    </header>
+
+    <div class="content" style="margin-top: 70px">
+        <ul class="list">
+            <li><a class="padded-list" href="#!step-one">Novo relatório</a></li>
+            <li><a class="padded-list" href="https://sistema-fgs.herokuapp.com/password/reset" target="_blank">Relatórios</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Static dialogs -->
+<div class="dialog" data-cancelable="false" id="more-news-contracts">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">Novos contratos <i class="icon icon-info-outline" style="color: red"></i></h3>
+            <p>
+                A sua lista de contratos <b>offline</b> está desatualizada, aguarde enquanto sincronizamos aos mais <b>atuais</b>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="dialog" data-cancelable="false" id="more-news-transports">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">Novas empresas de transporte <i class="icon icon-info-outline" style="color: red"></i></h3>
+            <p>
+                A sua lista de empresa <b>offline</b> está desatualizada, aguarde enquanto sincronizamos aos mais <b>atuais</b>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="dialog" data-cancelable="false" id="more-news-activities">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">Novas atividades <i class="icon icon-info-outline" style="color: red"></i></h3>
+            <p>
+                A sua lista de atividades <b>offline</b> está desatualizada, aguarde enquanto sincronizamos aos mais <b>atuais</b>.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="dialog" data-cancelable="false" id="more-first-activities">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">
+                <i class="icon icon-info-outline" style="color: red"></i>
+                <br>
+                Primeiro acesso a atividades
+            </h3>
+            <p>
+                Detectamos que este é o seu primeiro acesso a atividade desse contrato, aguarde enquanto preparamos tudo
+                pra você.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="dialog" data-cancelable="false" id="login-dialog">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">
+                <i class="icon icon-info-outline" style="color: red"></i>
+                <br>
+                Autenticando...
+            </h3>
+            <p>
+                Seja bem vindo ao Apontamente FGS, aguarde enquanto verificamos a autenticidade.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="dialog" data-cancelable="false" id="load-data">
+    <div class="content">
+        <div class="padded-full">
+            <h3 align="center">
+                <i class="icon icon-sync with-circle" style="color: #005ebb"></i>
+                <br>
+                Carregando dados...
+            </h3>
+            <p>
+                Aguarde enquanto sincronizamos os seus dados.
+            </p>
+            <div class="circle-progress active mb-15">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Static notification -->
+<div class="notification" id="nothingData">
+    Se não houver nenhum dado a ser inserido, digite 0 para prosseguir.
+</div>
+
+<login data-page="true" data-loader="true">
+
+    <header class="header-bar">
+        <div class="center">
+            <h1 class="title">Apontamento FGS</h1>
+        </div>
+    </header>
+    <div class="content padded-full">
+
+        <div class="container-center">
+            <img src="assets/img/logo.png" alt="Logo FGS" class="logo mt-20">
+
+            <h3 class="padded-top gray fw-300" align="center">
+                Acesso ao sistema mobile
+            </h3>
+
+            <div class="row pr-20 pl-20">
+                <input type="email" id="email-login" placeholder="Digite seu e-mail">
+                <input type="password" id="password-login" class="mt-10 mb-10" placeholder="Digite sua senha">
+
+                <a href="https://sistema-fgs.herokuapp.com/password/reset" target="_blank" style="font-size: 10px" class="mt-20">Recuperar minha
+                    senha</a>
+                <button class="mt-20 btn primary center" id="loginButton">
+                    <i class="icon icon-check"></i>
+                    Login
+                </button>
+            </div>
+        </div>
+
+    </div>
+</login>
+
+<!-- Main dashboard -->
+<dashboard data-page="true"></dashboard>
+
+<!-- reports from the dashboard -->
+<step-one data-page="true"></step-one>
+<step-two data-page="true"></step-two>
+<step-three data-page="true"></step-three>
+<step-four data-page="true"></step-four>
+<step-five data-page="true"></step-five>
+<step-six data-page="true"></step-six>
+<step-seven data-page="true"></step-seven>
+<step-eight data-page="true"></step-eight>
+<step-nine data-page="true"></step-nine>
+<step-ten data-page="true"></step-ten>
+<step-eleven data-page="true"></step-eleven>
+<step-twelve data-page="true"></step-twelve>
+<step-thirteen data-page="true"></step-thirteen>
+
+<script src="assets/node_modules/izitoast/dist/js/iziToast.min.js"></script>
+<script src="assets/node_modules/phonon/dist/js/phonon.js"></script>
+<script src="assets/node_modules/vue/dist/vue.min.js"></script>
+<script src="assets/node_modules/axios/dist/axios.js"></script>
+<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+
+<script src="assets/js/alerts.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/pages.js"></script>
+
+<script>
+    app.start();
+</script>
+</body>
+</html>
